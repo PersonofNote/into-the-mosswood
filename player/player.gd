@@ -7,7 +7,6 @@ var HEALTH = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	TYPE = "player"
-	print(TYPE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -19,10 +18,9 @@ func _process(delta):
 		anim_switch("walk")
 	else:
 		anim_switch("idle")
-		
-#func physics_process(_delta):
-#	controls_loop()
-#	movement_loop()
+	if Input.is_action_just_pressed('a'):
+		use_item(preload("res://items/sword.tscn"))
+
 
 
 func controls_loop():
