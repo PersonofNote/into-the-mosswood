@@ -56,13 +56,14 @@ func anim_switch(animation):
 func damage_loop():
 	if hitstun > 0:
 		hitstun -= 1
-	for body in $hitbox.get_overlapping_bodies():
+	for area in $hitbox.get_overlapping_areas():
+		var body = area.get_parent()
 		# Check for hit timer and if it has damage to deal and if it can deal damage to the entity (enemies don't damage enemies)
 		if hitstun == 0 and body.get("DAMAGE") != null and body.get("TYPE") != TYPE:
 			health -= body.get("DAMAGE")
 			hitstun = 10
 			# Transform.origin is the x and y
-			knockdir = transform.origin - body.transform.origin
+			knockdir = global_transform.origin - body.global_transform.origin
 			print(health)
 
 func use_item(item):

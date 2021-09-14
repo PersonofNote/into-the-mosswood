@@ -7,7 +7,6 @@ extends "res://engine/entity.gd"
 var movetimer_length = 15
 var movetimer = 15
 var DAMAGE = 1
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	movedir = dir.rand()
@@ -21,4 +20,6 @@ func _process(delta):
 	if movetimer == 0 || is_on_wall():
 		movedir = dir.rand()
 		movetimer = movetimer_length
-	#damage_loop()
+	damage_loop()
+	if health < 0:
+		queue_free()

@@ -2,26 +2,19 @@ extends "res://engine/entity.gd"
 
 #TYPE = "player"
 # Declare member variables here.
-var DAMAGE = 1
-var HEALTH = 1
+var state = "default"
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	health = 1
 	TYPE = "player"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	controls_loop()
-	movement_loop()
-	spritedir_loop()
-	damage_loop()
-	if movedir != Vector2(0,0):
-		anim_switch("walk")
-	else:
-		anim_switch("idle")
-	if Input.is_action_just_pressed('a'):
-		use_item(preload("res://items/sword.tscn"))
-
-
+	match state:
+		"default":
+			state_default()
+		"swing":
+			state_swing()
 
 func controls_loop():
 	var LEFT = Input.is_action_pressed("ui_left")
@@ -49,3 +42,24 @@ func controls_loop():
 		anim_switch('idle')
 
 
+func state_default():
+	controls_loop()
+	movement_loop()
+	spritedir_loop()
+	damage_loop()
+	if movedir != Vector2(0,0):
+		anim_switch("walk")
+	else:
+		anim_switch("idle")
+	if Input.is_action_just_pressed('a'):
+		use_item(preload("res://items/sword.tscn"))
+
+func state_swing():
+	anim_switch("idle")
+	damage_loop()
+
+# States:
+# falling
+# pushing
+# speaking
+# pulling?
